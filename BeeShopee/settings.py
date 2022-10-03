@@ -19,6 +19,9 @@ from django.urls import conf
 import django_heroku
 import dj_database_url
 
+
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,6 +37,13 @@ DEBUG = config('DEBUG',cast=bool,default=False)
 
 ALLOWED_HOSTS = ['*']
 
+
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(var_name)
+        raise ImproperlyConfigured(error_msg)
 
 # Application definition
 
@@ -94,7 +104,7 @@ AUTH_USER_MODEL = 'customers.Customers'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('NAME'),
+        'NAME': get_env_variable("NAME"),
         'USER': config('USER'),
         'HOST': config('HOST'),
         'PASSWORD':config('PASSWORD') ,
@@ -161,3 +171,5 @@ SERVICE = config('SERVICE_SID')
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 django_heroku.settings(locals())
+
+
