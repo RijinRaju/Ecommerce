@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from ctypes import cast
+from email.policy import default
 from pathlib import Path
 import os
 from decouple import config
@@ -29,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3g%f!eiikn&s8!hjg4_w3(lw)-8hvk9u-bpfm*t5ngt1#!)#kl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',cast=bool)
+DEBUG = config('DEBUG',cast=bool,default=False)
 
 ALLOWED_HOSTS = []
 
