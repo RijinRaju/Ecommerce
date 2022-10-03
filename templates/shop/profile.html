@@ -1,0 +1,245 @@
+{% extends 'shop/navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link rel="stylesheet" href="@sweetalert2/themes/dark/dark.css">
+<style>
+  body{
+    overflow-x:hidden ;
+  }  
+</style>
+</head>
+<body>
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        {% block sidebar %}
+        <div class="col-3">
+            <div class="card shadow p-3  bg-body rounded" style="width: 18rem;height:30rem;">
+                          <div class="card-body ml-5">
+                            <p>Refer Code::<strong>{{referal_code.referal_code}}</strong></p>
+                              <p class="rounded-circle bg-secondary d-flex justify-content-center " style="width:5rem;height:5rem;">
+                                  <img src="{% static 'img/man.png'%}" alt="">
+                                
+                                </p>
+                              <p>Hello,<strong> &nbsp;{{user.name}}</strong></p>
+                             <p class="ml-3"><i class="fa fa-solid fa-wallet"></i>&nbsp; {{coins}}</p>
+                             
+                          </div>
+                             
+
+                             <div class="card shadow p-3 mt-5 mb-2 bg-body rounded ">
+                               <a href="/order_view/" class="d-flex justify-content-center">MY ORDERS</a>
+                             </div>
+                            <div class="card shadow p-3 mt-2 mb-2 bg-body rounded ">
+                               <a href="{% url 'wishlist' %}" class="d-flex justify-content-center">WishList</a>
+                             </div>
+
+
+                            <div class="card shadow p-3 mt-2 mb-2 bg-body rounded ">
+                               <a href="{% url 'user_logout' %}" class="d-flex justify-content-start"><img class="mr-5" style="width:2rem;" src="{% static 'img/on-off-button.png' %}" alt="">Logout</a>
+                             </div>
+
+
+            </div>
+        </div>
+        {% endblock %}
+
+
+        <div class="col-9">
+
+            <div class="card bg-secondary border-0 " style="width:50rem;">
+                 {% block innercontent %}
+              <div class="card-body">
+                <h5 class="card-title">Personal Details</h5>
+
+
+                  <div class="row">
+                      <div class="mb-3 col">
+                    <label for="exampleInputEmail1" class="form-label font-monospace fw-light">Name</label>
+                    <input type="email" class=" fs-6 form-control form-control-lg border border-1 fw-light" id="exampleInputEmail1" aria-describedby="emailHelp" style="width:15rem;" readonly value="{{user.name}}">
+                   </div>
+                      <div class="mb-3 col ">
+                        <label for="exampleInputEmail1" class="form-label font-monospace fw-light">User Name</label>
+                        <input type="email" class="fs-6 form-control form-control-lg border border-1" id="exampleInputEmail1" aria-describedby="emailHelp" style="width:15rem;" readonly value="{{user.username}}">
+                        </div>
+
+                      </div>
+                  <div class="row">
+                    <div class="mb-3 col">
+                        <label for="exampleInputEmail1" class="form-label font-monospace fw-light">Email Address</label>
+                        <input type="email" class="fs-6 form-control form-control-lg border border-1" id="exampleInputEmail1" aria-describedby="emailHelp" style="width:15rem;" readonly value="{{user.email}}">
+                     </div>
+                      <div class="col">
+                           <label for="exampleInputEmail1" class="form-label font-monospace fw-light">Phone Number</label>
+                        <input type="email" class="fs-6 form-control form-control-lg border border-1" id="exampleInputEmail1" aria-describedby="emailHelp" style="width:15rem;" readonly value="{{user.phone}}">
+                      </div>
+                       <div class="col">
+                           <label for="exampleInputEmail1" class="form-label font-monospace fw-light">Address</label>
+                        <input type="email" class="fs-6 form-control form-control-lg border border-1" id="exampleInputEmail1" aria-describedby="emailHelp" style="width:15rem;" readonly value="{{user.address}}">
+                      </div>
+
+                      <!-- referal code -->
+                        <div class="col">
+                          <form action="{% url 'wallet' %}" method="POST">
+                        {% csrf_token %}
+                            <label for="exampleInputReferal" class="form-label font-monospace fw-light">Refral Code</label>
+                            <input type="text" class="fs-6 form-control form-control-lg border border-1" id="exampleInputReferal"
+                              aria-describedby="emailHelp" style="width:15rem;" name="referal_code"><button type="submit" class="btn btn-info rounded">Enter</button>
+                          </form>
+                        </div>
+                  </div>
+
+                 
+                  <div class="col mt-5">
+
+                        <button type="button" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Change Password
+                        </button>
+                        <button type="button" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            Edit profile
+                        </button>
+                        
+
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <form action="" method="post">
+                              {% csrf_token %}
+                              <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+
+                                      <div class="modal-body">
+                                           <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">New Password:</label>
+                                                <input type="password" class="form-control"name="password" id="recipient-name" required>
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Confirm Password:</label>
+                                                <input type="password" class="form-control" name="confirm_password" id="message-text" required>
+
+                                              </div>
+                                      </div>
+
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save Password</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </form>
+                            </div>
+                  </div>
+<!--                  Edit profile modal -->
+                  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                      <form action="{% url 'edit_profile' %}" method="post">
+                          {% csrf_token %}
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">PROFILE</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">Name</label>
+                                                <input type="text" class="form-control" name="name" id="recipient-name" value="{{user.name}}">
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">User Name</label>
+                                                <input type="text" class="form-control" name="user_name" id="message-text" value="{{user.username}}">
+                                              </div>
+                                                <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Email_address</label>
+                                                <input type="text" class="form-control" name="email" id="message-text" value="{{user.email}}">
+                                              </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Phone</label>
+                                                <input type="text" class="form-control" name="phone" id="message-text" value="{{user.phone}}">
+                                              </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Address</label>
+                                                <input type="text" class="form-control" name="address" id="message-text" value="{{user.address}}">
+                                              </div>
+
+                            </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Changes</button>
+                            <button type="submit" class="btn btn-primary">Save </button>
+                          </div>
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+
+                  <div class="mt-5 fs-6 ">
+                      <h5>FAQs</h5>
+                            <p>
+                        <span class="fw-bold">What happens when I update my email address (or mobile number)?</span><br>
+                        Your login email id (or mobile number) changes, likewise. You'll receive all your account related communication on your updated email address (or mobile number).
+                        <br>&nbsp;
+                                                  <span class="fw-bold">When will my Beeshopee account be updated with the new email address (or mobile number)?</span><br>
+                        It happens as soon as you confirm the verification code sent to your email (or mobile) and save the changes.
+                        <br>&nbsp;
+                                                  <span class="fw-bold">What happens to my existing Beeshopee account when I update my email address (or mobile number)?</span><br>
+                        Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.
+                        <br>&nbsp;
+                            <span class="fw-bold">Does my Seller account get affected when I update my email address?</span><br>
+                        Beeshopee has a 'single sign-on' policy. Any changes will reflect in your Seller account also.</p>
+                  </div>
+
+
+              </div>
+                 {% endblock %}
+            </div>
+
+        </div>
+
+
+    </div>
+    
+</div>
+<!-- Back to Top -->
+<a href="{% url 'search_view' %}" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2/dist/sweetalert2.min.js"></script>
+<script>
+{% for msg in messages %}
+{% if msg %}
+Swal.fire({
+  title: 'Error!',
+  text: '',
+  icon: 'error',
+  confirmButtonText: 'OK'
+})
+{% endif %}
+{% endfor %}
+</script>
+
+
+{% endblock %}
+</body>
+</html>

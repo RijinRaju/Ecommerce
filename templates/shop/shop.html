@@ -1,0 +1,183 @@
+{% extends 'shop/navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>MultiShop - Online Shop Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet">
+
+<!--    Bootstrap 5 link-->
+
+</head>
+
+<body>
+    {% block content %}
+
+    <!-- Shop Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4">
+                <!-- Price Start -->
+                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form action="" method="post">
+
+                        {% for price in prices %}
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <a href="{% url 'filter' price %}"><i class="fa fa-solid fa-check"></i></a>
+                            <label for="price-1">Below &nbsp; &#8377;{{price}}</label>
+                            <span class="badge border font-weight-normal">150</span>
+                        </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <!-- Price End -->
+
+
+            </div>
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+                            </div>
+                            <div class="ml-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Latest</a>
+                                        <a class="dropdown-item" href="#">Popularity</a>
+                                        <a class="dropdown-item" href="#">Best Rating</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group ml-2">
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">10</a>
+                                        <a class="dropdown-item" href="#">20</a>
+                                        <a class="dropdown-item" href="#">30</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for data in prod_page %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                                {% for off in category_offer %}
+                                    {% if data.category == off.category %}
+                                    <span class="badge badge-info">{{off.offer_name}}</span>
+                                {% endif %}
+                                {% endfor %}
+                            <div class="product-img position-relative overflow-hidden">
+                               
+                                {% if data.image1 %}
+                                <img class="img-fluid w-50"style="margin-left:4rem;margin-top:1rem;" src="{{data.image1.url}}" alt="">
+                                {% endif %}
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href="{% url 'add_cart' data.id %}"><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="{%url 'add_wishlist' data.id %}"><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="{% url 'detailed_view' data.id%}">{{data.productName}}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5 id='comp_price'><i class="fas fa-rupee-sign"></i> {{data.discount_price}}</h5><h6 class="text-muted ml-2"><del>{{data.price}}</del></h6>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-12">
+
+                        <nav>
+
+                          <ul class="pagination justify-content-center">
+                              <li class="mr-3">page {{prod_page.number}} of {{prod_page.paginator.num_pages}}</li>
+                          {% if prod_page.has_previous   %}
+                              <a class="page-link" href="?page=1">&laquo; First</span></a>
+                              <a class="" href="?page={{prod_page.previous_page_number}}"></a>
+                            {% endif %}
+
+                              {% if prod_page.has_next %}
+                            <a class="page-link" href="?page={{prod_page.next_page_number}}">next</a>
+                              <a class="page-link" href="?page={{prod_page.paginator.num_pages}}">Last &raquo;</a>
+                                {% endif %}
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+    <!-- Shop End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+    
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+
+<script>
+   
+    $(document).ready(function () {
+
+        $('.price').click(function (e) {
+            
+            var char_value = $(".price").val();
+           
+            var value = parseInt(char_value);
+
+           
+                
+            
+        });
+
+    })
+
+</script>
+{% endblock %}
+</body>
+
+</html>

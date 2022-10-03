@@ -1,0 +1,85 @@
+{% extends 'owner/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        {% block content %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            Featured
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'edit_category_offer' category_offer.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                            
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" value="{{category_offer.offer_name}}" id="floatingInputGrid" name="offer_name" value="" required>
+                                                <label for="floatingInputGrid">Offer Name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <input type="date" class="form-control" value="{{category_offer.valid_until|date:'Y-m-d'}}" id="floatingValidGrid" name="valid_date" required>
+                                                <label for="floatingValidGrid">Valid until</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" value="{{category_offer.offer_percent}}" id="floatingAmountGrid" min=0 max="75" name="amount" required>
+                                                <label for="floatingAmountGrid">Discount percent</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-md">
+                                            <div class="form-floating">
+                                                <select class="form-control" id="floatingLimitGrid" name="category" required>
+                                                    {% for cat in category %}
+                            
+                                                    <option value="{{cat.id}}">{{cat.title}}</option>
+                                                    {% endfor %}
+                            
+                                                </select>
+                                                <label for="floatingLimitGrid">Category</label>
+                                            </div>
+                                        </div>
+                            
+                                    </div>
+                            
+                                </div>
+                                <div class="modal-footer">
+                                    
+                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% endblock %}
+    </body>
+
+</html>

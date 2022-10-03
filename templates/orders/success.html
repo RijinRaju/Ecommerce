@@ -1,0 +1,26 @@
+{% extends 'shop/navbar.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+{% csrf_token %}
+<div class="card text-center">
+  <div class="card-header text-success">
+    successful
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Order placed successfully</h5>
+    <p class="card-text">ORDER ID:{{order.order_number}}</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Go HOME</a>
+  </div>
+  <div class="card-footer text-muted">
+    Thanks for purchasing
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

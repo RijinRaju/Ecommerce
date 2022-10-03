@@ -1,0 +1,213 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+
+</head>
+<body>
+
+{% block content %}
+
+
+<div class="card mt-5 me-3" style="background-color: #000000;">
+  <h5 class="card-header text-white">Home</h5>
+  <div class="card-body " style="background-color: #000000;">
+
+      <div class="total">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="card shadow-lg p-3 mb-5  rounded " style="background-color: #191c24;">
+
+                        <div><img src="{% static 'img/sales.png'%}" width="58rem" class="m-2 bg-primary rounded-circle" alt=""></div>
+                      <div class="card-body col">
+                        <h5 class="card-title text-white">Total Sales</h5>
+                        <h3 class="card-text text-white">&#8377; {{total_sales}}</h3>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="card shadow-lg p-3 mb-5  rounded" style="background-color: #191c24;">
+                        <div><img src="{% static 'img/orders.png'%}" width="58rem" class="m-2 bg-primary rounded-circle" alt=""></div>
+
+                      <div class="card-body">
+                        <h5 class="card-title text-white">Total Orders </h5>
+                        <h3 class="card-text text-white">{{total_orders}}</h3>
+
+                      </div>
+                    </div>
+                  </div>
+                     <div class="col-sm-4">
+                    <div class="card shadow-lg p-3 mb-5  rounded" style="background-color: #191c24;">
+                        <div><img src="{% static 'img/product.png'%}" width="58rem" class="m-2 bg-primary rounded-circle" alt=""></div>
+
+                      <div class="card-body">
+                        <h5 class="card-title text-white">Total Products </h5>
+                        <h3 class="card-text text-white">{{total_products}}</h3>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      </div>
+
+      <div class="container-fluid">
+<div class="row">
+    <div class="col">
+            <h5 class="card-title text-white">Most selling product</h5>
+        <div style="width:30rem;height:30rem;background-color: #191c24;" class="card">
+            <canvas id="myChart" width="400" height="400"></canvas>
+         </div>
+    </div>
+        <div class="col">
+            <h5 class="card-title text-white">Total Customers</h5>
+            <div style="width:25rem;height:25rem;background-color: #191c24;" class="card">
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+        </div>
+        
+    </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <h5 class="card-title text-white">Sales per Day</h5>
+                    <div style="width: 30rem;height: 30rem;background-color: #191c24;" class="card">
+                    <canvas id="myChart3" width="400" height="400"></canvas>
+                </div>  
+                </div>
+
+
+                 
+            </div>
+
+    </div>
+
+
+  
+   
+</div>
+
+
+    </div>
+    
+       
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+ const ctx = document.getElementById('myChart');
+ const ctx2 = document.getElementById('myChart2');
+ 
+
+
+
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{brand_name| safe}},
+
+        datasets: [{
+            label: '# of Votes',
+            data: {{brand_order_count | safe }},
+            backgroundColor: [
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)',
+                'rgb(255,0,0)',
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)'
+            ],
+            borderColor: [
+                'rgb(0, 69, 204)',
+               'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)',
+                'rgb(255,0,0)',
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)',
+                'rgb(0, 69, 204)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+const brand_chart = new Chart(ctx2,{
+
+type:'doughnut',
+data:{
+  labels: ['Customers'],
+        datasets: [{
+            label: '# of Votes',
+            data: "{{total_customers}}",
+            backgroundColor: [
+                'rgb(0, 69, 204)',
+
+            ],
+            borderColor: [
+                'rgb(0, 69, 204)',
+
+            ],
+            borderWidth: 1
+        }]
+},
+options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+})
+
+
+  
+
+  
+     const labels = {{day_date}};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'number of orders per day',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: "{{date_count}}",
+            }]
+        };
+
+        const config = {
+            type: 'bubble',
+            data: data,
+            options: {}
+        };
+
+
+         const sales_chart = new Chart(
+                document.getElementById('myChart3'),
+                config
+            );
+
+</script>
+<script>
+    
+</script>
+
+{% endblock %}
+
+
+</body>
+</html>

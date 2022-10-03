@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+
+}
+body { 
+    margin:0rem;
+    background-color:#000000;
+}
+    </style>
+
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 ">
+             <div id="sidebar" class=" rounded-3  " style="height:37rem;margin-top:2rem;position:fixed;background-color:#191c24;">
+        {% block sidebar %}
+
+        <ul type="none">
+
+            <li class="mt-4"><a href="{% url 'admin_home' %}" class=" mt-5"><button class="btn text-white" >HOME</button></a></li>
+            <li class="mt-3"><a href="{% url 'products' %}"><button class="btn text-white " >PRODUCTS</button></a></li>
+            <li class="mt-3"><a href="{% url 'users'%}"><button class="btn text-white" >USERS</button></a></li>
+            <li class="mt-3"><a href="{% url 'orders'%}"><button class="btn text-white" >ORDERS</button></a></li>
+            <li class="mt-3"><a href="{% url 'category'%}"><button class="btn text-white" >CATEGORY</button></a></li>
+            <li class="mt-3"><a href="{% url 'coupons' %}"><button class="btn text-white" >OFFERS</button></a></li>
+             <li class="mt-3"><a href="{% url 'banner' %}"><button class="btn text-white" >BANNERS</button></a></li>
+            <li class="mt-3"><a href="{% url 'sales' %}"><button class="btn text-white">SALES</button></a></li>
+            <li class="mt-5"><a href="{% url 'admin_logout' %}"><button class="btn text-white" style="background-color:#248afd;">LOGOUT</button></a></li>
+        </ul>
+        {% endblock %}
+    </div>
+        </div>
+        <div class="col-10  ">
+            <div id="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

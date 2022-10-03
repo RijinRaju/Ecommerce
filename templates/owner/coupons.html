@@ -1,0 +1,297 @@
+
+{% extends 'owner/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="card-body " style="background-color:#000000;">
+      <button type="button" class="btn  justify-content-end" style="background-color:#248afd;" data-bs-toggle="modal" data-bs-target="#exampleModal">Coupon Offer</button>
+    <button class="btn " data-bs-toggle="modal" style="background-color:#248afd;" data-bs-target="#exampleModal2">Category Offer</button>
+    
+    <button type="button" class="btn  justify-content-end" style="background-color:#248afd;" data-bs-toggle="modal" data-bs-target="#exampleModal3">Product Offer</button>
+    <div class="card w-100 mt-5" style="background-color:#191c24;">
+    
+  
+    <h6 class="card-title text-white ms-2" >Coupon offer</h6>
+
+    <table class="table text-white table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">coupon quantity</th>
+      <th scope="col">Title</th>
+      <th scope="col">Code</th>
+      <th scope="col">Expiry Date</th>
+      <th scope="col"> Status</th>
+      <th scope="col">Edit </th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for coupon in coupon %}
+    <tr>
+        <td>{{coupon.max_limit}}</td>
+        <td>{{coupon.title}}</td>
+        <td>{{coupon.coupon_code}}</td>
+        <td>{{coupon.valid_until}}</td>
+      
+       
+        <td>{{coupon.is_Active}}</td>
+        <td><a href="{% url 'edit_coupon' coupon.id %}"><button class="btn btn-info">Edit</button></a></td>
+        <td><a href="{% url 'delete_coupon' coupon.id %}"><button class="btn btn-danger">Delete</button></a></td>
+     
+    </tr>
+ 
+ {% endfor %}
+  </tbody>
+</table>
+
+
+  </div>
+</div>
+
+<div class="card ms-3 me-3" style="background-color:#191c24;">
+  <div class="card-header text-white" >
+    <strong>Category Offer</strong>
+  </div>
+  <div class="card-body">
+    <table class="table text-white table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">Offer Name</th>
+      <th scope="col">Valid Date</th>
+      <th scope="col" >Offer Percentage</th>
+      <th scope="col"> Status</th>
+      <th scope="col">Edit </th>
+      <th scope="col" >Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for offer in category_offer %}
+    <tr>
+        <td>{{offer.offer_name}}</td>
+        <td>{{offer.valid_until}}</td>
+        <td >{{offer.offer_percent}}</td>
+        <td>{{offer.is_Active}}</td>
+        <td><a href="{% url 'edit_category_offer' offer.id %}"><button class="btn btn-info">Edit</button></a></td>
+        <td><a href="{% url 'delete_category_offer' offer.id %}"><button class="btn btn-danger">Delete</button></a></td>
+     
+    </tr>
+ 
+ {% endfor %}
+  </tbody>
+</table>
+  </div>
+</div>
+
+<!-- product offer  -->
+<div class="card ms-3 me-3 mt-3" style="background-color:#191c24;">
+  <div class="card-header text-white">
+    <strong>Product Offer</strong>
+  </div>
+  <div class="card-body">
+    <table class="table text-white table-borderless">
+      <thead>
+        <tr>
+          <th scope="col">Offer amount</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Edit </th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for offer in product_offer %}
+        <tr>
+          <td>{{offer.offer_amount}}</td>
+          <td>{{offer.product.productName}}</td>
+        
+          <td><a href="{% url 'edit_product_offer' offer.id %}"><button class="btn btn-info">Edit</button></a></td>
+          <td><a href="{% url 'delete_product_offer' offer.id %}"><button class="btn btn-danger">Delete</button></a>
+          </td>
+
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- create coupon  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Coupon</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <form action="{% url 'add_coupon' %}" method="POST">
+        {% csrf_token %}
+      <div class="modal-body">
+        
+            <div class="row g-2 mt-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGrid" name="title"  value=""required>
+                    <label for="floatingInputGrid">Coupon Title</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingCodeGrid" name="code" required>
+                    <label for="floatingCodeGrid">Coupon Code</label>
+                    </div>
+                </div>
+        </div>
+
+        <div class="row g-2 mt-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="date" class="form-control" id="floatingValidGrid" name="valid_date"  required>
+                    <label for="floatingValidGrid">Valid until</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="floatingAmountGrid" min="0" max="20 " name="amount" required>
+                    <label for="floatingAmountGrid">Discount Percentage</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2 mt-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="floatingLimitGrid" name="limit" required>
+                    <label for="floatingLimitGrid">Coupon Limit</label>
+                </div>
+            </div>
+            
+        </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit"  class="btn btn-primary">Create</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<!--  category offer  -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Categoy Offer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <form action="{% url 'add_category_offer' %}" method="POST">
+        {% csrf_token %}
+      <div class="modal-body">
+        
+            <div class="row g-2 mt-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGrid" name="offer_name"  value=""required>
+                    <label for="floatingInputGrid">Offer Name</label>
+                    </div>
+                </div>
+        </div>
+
+        <div class="row g-2 mt-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="date" class="form-control" id="floatingValidGrid" name="valid_date"  required>
+                    <label for="floatingValidGrid">Valid until</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="floatingAmountGrid" name="amount" min="0" max="75" required>
+                    <label for="floatingAmountGrid">Discount Percentage</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2 mt-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-control" id="floatingLimitGrid" name="category" required>
+                        {% for cat in category %}
+                        
+                        <option value="{{cat.id}}">{{cat.title}}</option>
+                        {% endfor %}
+
+                    </select>
+                    <label for="floatingLimitGrid">Category</label>
+                </div>
+            </div>
+            
+        </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit"  class="btn btn-primary">Apply</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+  
+<!-- Product offer  -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product Offer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'add_product_offer' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+
+          <div class="row g-2 mt-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="floatingInputGrid" name="percent" min="0" max="75" value=""  required>
+                <label for="floatingInputGrid">Discount Percentage</label>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="row g-2 mt-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <select class="form-control" id="floatingLimitGrid" name="product" required>
+                  {% for product in products_list %}
+                
+                  <option value="{{product.id}}">{{product.productName}}</option>
+                  {% endfor %}
+                
+                </select>
+                <label for="floatingValidGrid">Choose Product</label>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock%}
+</body>
+</html>

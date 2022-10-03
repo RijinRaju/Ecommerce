@@ -1,0 +1,85 @@
+{% extends 'shop/profile.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+{% block innercontent %}
+{% for order in orders %}
+ <div class="card mb-3 mt-2 ml-5" style="max-width: 690px;">
+  <div class="row g-0">
+    <div class="col-md-2 " >
+        <img src="{{order.product.image1.url}}" class="img-fluid rounded-start m-2"  width="70" alt="...">
+    </div>
+    <div class="col-md-7 ">
+      <div class="card-body">
+        <h5 class="card-title">{{order.product.productName}}</h5>
+        <p class="card-text"><b>Quantity:</b>{{order.quantity}}</p>
+          <p class="card-text"><b>Price:</b>&#8377;{{order.product_price}}</p>
+
+        <p class="card-text"><small class="text-muted">Order Date:{{order.created_at}}</small></p>
+
+      </div>
+    </div>
+
+      <div class="col-md-3 mt-5 ">
+          {% if order.ordered == True and order.order.status != "Out of delivery" and order.order.status != "Delivered" %}
+          <a href="{% url 'cancel_orders_view' order.id %}" class="mr-4"><button class="btn btn-dark">Cancel</button></a>
+          {% elif order.ordered == False %}
+           <h5 class="text-danger fs-6 mt-3">cancelled</h5>
+          {% endif %}
+      
+       <a href="{% url 'order_detailed_view' order.id %}"><button class="btn btn-info mt-3">Details</button></a>
+        </div>
+        
+  </div>
+  
+</div>
+
+
+{% endfor %}
+<div class="row mt-3">
+    <div class="col-12">
+
+                        <nav>
+
+                          <ul class="pagination justify-content-center">
+                              <li class="mr-3">page {{orders.number}} of {{orders.paginator.num_pages}}</li>
+                          {% if orders.has_previous   %}
+                              <a class="page-link" href="?page=1">&laquo; First</span></a>
+                              <a class="" href="?page={{orders.previous_page_number}}"></a>
+                            {% endif %}
+
+                              {% if orders.has_next %}
+                            <a class="page-link" href="?page={{orders.next_page_number}}">next</a>
+                              <a class="page-link" href="?page={{orders.paginator.num_pages}}">Last &raquo;</a>
+                                {% endif %}
+                          </ul>
+                        </nav>
+                    </div>
+
+  </div>
+  
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock  %}
+
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends 'owner/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+{% block content %}
+<div class="card mt-4 " style="background-color: #191c24;">
+  <div class="card-header text-white">
+      Customers
+
+  </div>
+  <div class="card-body " style="background-color: #191c24;">
+    <table class="table text-white">
+  <thead>
+    <tr>
+      <th scope="col">No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+        <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for cust in customers %}
+    <tr>
+        <td>{{cust.id}}</td>
+        <td>{{cust.name }}</td>
+        <td>{{cust.email}}</td>
+        <td>{{cust.phone}}</td>
+        <td class="text-success">{{cust.status}}</td>
+        {% if cust.status == "ACTIVE" %}
+        <td><a href="block_user/{{cust.id}}" class="btn " style="background-color: #248afd;" onclick="confirm('Do you want to block the user?')">Block</a></td>
+        {% else %}
+        <td><a href="block_user/{{cust.id}}" class="btn btn-danger">UnBlock</a></td>
+        {% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+  </div>
+</div>
+ <nav class=" mt-2">
+
+                          <ul class="pagination justify-content-center">
+                              <li class="me-5 text-white">page {{customers.number}} of {{customers.paginator.num_pages}}</li>
+                          {% if customers.has_previous   %}
+                              <a class="page-link" href="?page=1">&laquo; First</span></a>
+                              <a class="" href="?page={{customers.previous_page_number}}"></a>
+                            {% endif %}
+
+                              {% if customers.has_next %}
+                            <a class="page-link" href="?page={{customers.next_page_number}}">next</a>
+                              <a class="page-link" href="?page={{customers.paginator.num_pages}}">Last &raquo;</a>
+                                {% endif %}
+                          </ul>
+                        </nav>
+{% endblock%}
+</body>
+</html>

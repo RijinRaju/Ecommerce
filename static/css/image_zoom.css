@@ -1,0 +1,9 @@
+
+#overlay {
+  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  background-image: url('https://via.placeholder.com/400.png');
+  background-repeat: no-repeat;
+}

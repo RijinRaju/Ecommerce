@@ -1,0 +1,49 @@
+{% extends 'shop/profile.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+{% block innercontent%}
+
+{% if wishlistitem %}
+{% for product in wishlistitem %}
+<a href="{% url 'detailed_view' product.products.id %}" style="text-decoration:none;" >
+<div class="card  w-75 shadow-lg p-3 mb-5 bg-white rounded" style="margin-left:10rem;">
+  <div class="card-body">
+      <div class="row">
+      <div class="col-3" >
+          <img src="{{product.products.image1.url}}" width="100" height="100" alt="">
+      </div>
+
+      <div class="col-9">
+          <h5 class="card-title">{{product.products.productName}}</h5>
+    <p class="card-text text-dark">{{product.products.thumbnail}}</p>
+          <h4>&#8377;{{product.products.discount_price}}</h4>
+      </div>
+          </div>
+              <a href="{% url 'remove_wishlist' product.products.id %}" class="ml-3 text-dark" style="margin-left:10rem;"><i class="fa fa-sharp fa-solid fa-trash"></i></a>
+
+
+  </div>
+</div>
+    </a>
+{% endfor %}
+{% else %}
+<div class="container">
+<div class="row">
+
+
+<div class="col ml-5" >
+<h6>no items in wishlist </h6>
+<a href="{% url 'home' %}"><button class="btn btn-warning"> <<<< Home</button></a>
+</div>
+</div>
+    </div>
+{% endif %}
+{% endblock %}
+</body>
+</html>

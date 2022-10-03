@@ -1,0 +1,76 @@
+{% extends 'owner/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        {% block content %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+
+                    <div class="card mt-4 text-white" style="background-color: #191c24;">
+                        <div class="card-header">
+                        Edit product Offer
+                        </div>
+                        <div class="card-body text-white" >
+                            <form action="{% url 'edit_product_offer' product.id  %}" method="POST">
+                                {% csrf_token %}
+                                <div class="modal-body " >
+                            
+                                    <div class="row g-2 mt-2 ">
+                                        <div class="col-md">
+                                            <label for="">Discount percent</label>
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" id="floatingInputGrid" name="percent" min="0" max="75"
+                                                    value="{{product.offer_percent}}" required>
+                                                <label for="floatingInputGrid" class="text-white">Discount Percentage</label>
+                                            </div>
+                                        </div>
+                            
+                                    </div>
+                            
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-md">
+                                            <label for="">Select Product</label>
+                                            <div class="form-floating">
+                                                
+                                                <select class="form-control" id="floatingLimitGrid" name="product" required>
+                                                    {% for product in main_products %}
+                            
+                                                    <option value="{{product.id}}">{{product.productName}}</option>
+                                                    {% endfor %}
+                            
+                                                </select>
+                                                <label for="floatingValidGrid">Choose Product</label>
+                                            </div>
+                                        </div>
+                            
+                                    </div>
+                            
+                                </div>
+                                <div class="modal-footer">
+                                   
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        {% endblock %}
+    </body>
+
+</html>

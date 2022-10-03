@@ -1,0 +1,51 @@
+{% extends 'owner/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+{% block content %}
+
+<div class="card mt-4 bg-light">
+  <div class="card-header">
+      Sub category
+
+  </div>
+  <div class="card-body bg-light">
+<div class="row">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">sub_id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Descriptions</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for subcat in sub_cat_data %}
+    <tr>
+      <th scope="row">{{subcat.id}}</th>
+      <td>{{subcat.title}}</td>
+      <td>{{subcat.description}}</td>
+     <td><a class="btn btn-warning" href="{% url 'sub_category_update' subcat.id %}">UPDATE</a></td>
+        <td><a class="btn btn-warning" style="background-color:#181938;color:white;" href="{% url 'sub_category_delete' subcat.id %}">DELETE</a></td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+    </div>
+  </div>
+    <a href="{% url 'sub_category_create'%}" class="mb-3 ms-3"><button class="btn btn-primary">ADD Category</button></a>
+</div>
+
+{% endblock%}
+</body>
+
+</html>

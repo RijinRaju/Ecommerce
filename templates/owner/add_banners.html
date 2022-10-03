@@ -1,0 +1,37 @@
+{% extends 'owner/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<div class="card text-white" style="background-color: #191c24;">
+  <div class="card-header">
+    ADD-BANNER
+  </div>
+  <div class="card-body">
+      <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="mb-3" >
+            <label for="name" class="form-label">Banner Name</label>
+            <input type="text" class="form-control" name="banner_name" id="name"  placeholder="Product name" required>
+          </div>
+            <div class="mb-3 ">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="banner_title" class="form-control" id="title"  placeholder="Enter Price" >
+            </div>
+          <div class="form-control mb-3">
+            <label for="img" class="form-label">Banner image</label>
+            <input type="file" name="banner_img" class="form-control" id="img" style="width:12rem;" required>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary">SAVE</button>
+      </form>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

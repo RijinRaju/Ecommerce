@@ -1,0 +1,44 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col">
+<div class="card mt-5 text-white" style="width: 58rem;height:38rem;background-color: #191c24;">
+  <div class="card-body" style="background-color: #191c24;">
+    <h5 class="card-title" >Add Category</h5>
+
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="form-group">
+                    <label for="">{{field.label }} </label>
+                    <input type="{{ field.field.widget.input_type }}" name="{{field.name}}" id="{{field.name}}"  value="{{field.value}}" class="form-control">
+
+                  {% if field.field.widget.input_type == "file" %}
+                  <img src="{{field.value.url}}" alt="" height="150px">
+                  {% endif %}
+                </div>
+              {% endfor %}
+    <button type="submit" value="submit" class="btn btn-primary mt-5 ms-5">submit</button>
+</form>
+  </div>
+</div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("title").onkeyup= function(){
+    document.getElementById("url_slug").value=document.getElementById("title").value.toLowerCase().replace(" ","-");
+    }
+</script>
+{% endblock %}
+</body>
+</html>

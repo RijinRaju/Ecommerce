@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 bg-warning">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded bg-warning" style="width:45rem;margin-left:20rem; margin-top:2rem;margin-bottom:3rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+
+                             <div class="col-6" style="margin-left:10rem;margin-top:1rem;">
+                                     <span class="h1 text-uppercase text-dark bg-warning px-2">BEE</span>
+                                     <span class="h1 text-uppercase text-warning bg-dark px-2 ml-n1 mt-2">Shopee</span>
+
+                             </div>
+                        {% for msg in messages %}
+                        <div class="text-danger">{{msg}}</div>
+                        {% endfor %}
+                             SIGN UP
+                    </h5>
+   <form action="" method="post"  name="form" >
+    {% csrf_token %}
+    <div class="mb-3" >
+    <label for="exampleInputName" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="exampleInputName" aria-describedby="emailHelp" style="width:20rem;">
+    <div id="name_error" class="form-text text-danger"></div>
+  </div>
+    <div class="mb-3"  style="margin-left:21rem; margin-top:-5.4rem;">
+    <label for="exampleInputUsername" class="form-label">User Name</label>
+    <input type="text"  name="username" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp"  style="width:20rem;" >
+    <div id="username_error" class="form-text text-danger"></div>
+  </div>
+    <div class="mb-3">
+    <label for="exampleInputAddress" class="form-label">Address</label>
+    <input type="text" name="address" class="form-control" id="exampleInputAddress" aria-describedby="emailHelp"  style="width:20rem;">
+    <div id="address_error" class="form-text text-danger"></div>
+  </div>
+  <div class="mb-3"  style="margin-left:21rem; margin-top:-5.4rem;">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  style="width:20rem;">
+    <div id="email_error" class="form-text text-danger"></div>
+  </div>
+    <div class="mb-3">
+    <label for="exampleInputPhone" class="form-label">Phone</label>
+    <input type="number" name="phone" class="form-control" id="exampleInputPhone" aria-describedby="emailHelp"  style="width:20rem;">
+    <div id="number_error" class="form-text text-danger"></div>
+  </div>
+
+  <div class="mb-3"  style="margin-left:21rem; margin-top:-5.4rem;">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1"  style="width:20rem;">
+      <div id="password_error" class="form-text text-danger"></div>
+  </div>
+  <input type="submit" class="btn btn-primary" value="submit" onclick="return validateForm()" style="margin-left:10rem; width:20rem;">
+</form>
+                    <a href="{% url 'login' %}" style="text-decoration:none;">LOGIN</a>
+  </div>
+</div>
+        </div>
+        <div class="col-6 bg-dark" style="height:100vh;">
+
+        </div>
+    </div>
+</div>
+<script>
+function validateForm() {
+var error = document.getElementById('name_error')
+var errorName = document.getElementById('username_error')
+var errorEmail = document.getElementById('email_error')
+var errorAddress = document.getElementById('address_error')
+var errorPhone = document.getElementById('number_error')
+var errorPassword = document.getElementById('password_error')
+var name = document.form.name.value
+var username = document.form.username.value
+var email = document.form.email.value
+var address = document.form.address.value
+var phone = document.form.phone.value
+var pass = document.form.password.value
+var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+			if (name == null || name.startsWith(" ") || !isNaN(name)) {
+				error.innerText='invalid username'
+				return false;
+			}
+			else if(username ==""||username == null || username.startsWith(" ") )
+			{
+			errorName.innerText='invalid username'
+			return false;
+			}
+			else if(address ==""||address == null  )
+			{
+			errorAddress.innerText='invalid Email'
+			return false;
+			}
+			else if(email == null || !email.match(validRegex) )
+			{
+			errorEmail.innerText='invalid Email'
+			return false;
+			}
+			else if(pass == null || pass.length<6)
+			{
+			errorPassword.innerText='invalid password'
+			return false;
+			}
+			else if(phone == null || phone.length<10 )
+			{
+			errorPhone.innerText='Enter valid number'
+			return false;
+			}
+			else{
+				return true;
+			}
+		}
+</script>
+</body>
+</html>

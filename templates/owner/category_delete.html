@@ -1,0 +1,24 @@
+{% extends 'owner/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+<h4 class="text-white" >Do you want to delete?</h4>
+<input type="submit" value="submit" class="btn btn-primary">
+    </form>
+
+<div class="image rounded-circle" style="height:50;width:50;">
+    <img src="{% static 'img/delete_icon_intraction.gif' %}" alt="" class="rounded-circle">
+
+</div>
+{% endblock %}
+</body>
+</html>

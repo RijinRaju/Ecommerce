@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h4 class="justify-content-center">invoice </h4>
+        <h1 class="d-flex " style="margin-left:20rem;"><strong>BEE SHOPEE</strong></h1>
+<hr>
+       {% for od in order_data %}
+                <div class="col">
+    <h4>Order Id:{{od.order.order_number}}</h4>
+    <h4>Order Date:{{od.order.created_at}}</h4>
+    <h5>{{od.product.productName}}</h5>
+
+            <h4><b>Bill To</b></h4>
+            <h5>{{od.order.full_name}}</h5>
+           <h5> {{od.order.full_address}}</h5>
+           <h5> {{od.order.country}}{{od.order.state}},{{od.order.city}},{{od.order.zip_code}}</h5>
+
+        </div>
+
+      <div class="col">
+          <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Title</th>
+      <th scope="col">Qty</th>
+      <th scope="col">Gross Amount &#8377;</th>
+        <th scope="col">Discount Amount &#8377;</th>
+        <th scope="col">Total &#8377;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{od.order.order_number}}</td>
+      <td>{{od.product.productName}}</td>
+      <td>{{od.quantity}}</td>
+        <td>{{od.product.price}}</td>
+        <td>{{od.product.discount_price}}</td>
+        <td> {{od.product.price}}</td>
+
+    </tr>
+    <tr>
+        <hr>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td ></td>
+      <td>Grand Total:{{od.product_price}}</td>
+    </tr>
+  </tbody>
+
+</table>
+      </div>
+
+ <hr>
+
+
+        {% endfor %}
+    </div>
+</div>
+
+
+
+</body>
+</html>

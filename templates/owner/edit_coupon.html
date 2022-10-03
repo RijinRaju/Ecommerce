@@ -1,0 +1,80 @@
+{% extends 'owner/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+
+            <div class="card mt-4 " style="background-color: #191c24;">
+                <div class="card-header text-white">
+                    Featured
+                </div>
+                <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                
+                        <div class="row g-2 mt-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingInputGrid" name="title" value="{{coupon.title}}" required>
+                                    <label for="floatingInputGrid" class="text-dark">Coupon Title</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingCodeGrid" name="code" value="{{coupon.coupon_code}}" required>
+                                    <label for="floatingCodeGrid">Coupon Code</label>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="row g-2 mt-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="floatingValidGrid" value="{{coupon.valid_until |date:'Y-m-d' }}" name="valid_date" required>
+                                    <label for="floatingValidGrid">Valid until</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="floatingAmountGrid" value="{{  coupon.maximum_discount_amount}}" name="amount" required>
+                                    <label for="floatingAmountGrid">Discount Amount</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mt-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="floatingLimitGrid" value="{{coupon.max_limit}}" name="limit" required>
+                                    <label for="floatingLimitGrid">Coupon Limit</label>
+                                </div>
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                    
+                        <button type="submit"  class="btn btn-primary">Save</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+    {% endblock %}
+</body>
+</html>

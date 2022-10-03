@@ -1,0 +1,64 @@
+{% extends 'owner/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{%  block content%}
+<div class="card w-100 mt-4 text-white" style="background-color: #191c24;">
+  <div class="card-body">
+    <h5 class="card-title">Update Product</h5>
+      <form action="" method="post" name="p_form">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" value="{{products_data.productName}}" id="name" style="width:15rem;" placeholder="Product name">
+          </div>
+            <div class="mb-3 ">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" name="price" value="{{products_data.price}}" class="form-control" id="price" style="width:12rem;" placeholder="Enter Price">
+          </div>
+          <div class="mb-3 ">
+            <label for="dis_price" class="form-label">Discount Price</label>
+            <input type="number" name="dis_price" value="{{products_data.discount_price}}" class="form-control" id="dis_price" style="width:12rem;" placeholder="Enter Price">
+          </div>
+          <div class="mb-3 ">
+            <label for="thumb" class="form-label">Thumbnail</label>
+            <input type="text" name="thumbnail" value="{{products_data.thumbnail}}" class="form-control" id="thumb" style="width:12rem;" placeholder="Enter Thumbnail">
+          </div>
+          <div class="mb-3 ">
+            <label for="stocks" class="form-label">Stocks</label>
+            <input type="number" name="stocks" value="{{products_data.quantity}}" class="form-control" id="stocks" style="width:10rem;" placeholder="set stocks">
+          </div>
+          <div class="mb-3 ">
+            <label for="category" class="form-label">Category</label>
+              <select name="category" id="category">
+                  {% for cat in category %}
+                  <option value="{{cat.id}}">{{cat.title}}</option>
+                  {% endfor %}
+              </select>
+          </div>
+    <div class="mb-4">
+    <label for="textarea" class="form-label">Product Description</label>
+    <textarea class="form-control" name="desc" id="textarea" rows="3" style="width:12rem;" >{{products_data.descriptions}}</textarea>
+    </div>
+          <div class="" style="margin-left:30rem;margin-top:-14rem;">
+            <label for="img1" class="form-label">image1</label>
+            <input type="file" name="img1" class="form-control" value="" id="img1" style="width:12rem;">
+
+                <label for="img2" class="form-label">image2</label>
+                <input type="file" name="img2" class="form-control" id="img2" style="width:12rem;">
+
+              <label for="img3" class="form-label">image3</label>
+            <input type="file" name="img3" class="form-control" id="img3" style="width:12rem;">
+          </div>
+          <input type="submit" class="btn btn-primary" value="submit">
+      </form>
+
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

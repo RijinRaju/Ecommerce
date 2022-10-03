@@ -1,0 +1,96 @@
+{% extends 'owner/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    
+    <div class="card mt-4 text-white" style="background-color: #191c24;">
+        <h5 class="card-header">Sales of Day</h5>
+        <div class="container card-header text-white">
+            <div class="row ">
+            <form action="" method="GET">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <div class="col">
+                            <input type="date" name= "date" class="form-control date" id="date" max="2022-09-28">
+                    </div>
+                   
+                        <div class="col">
+                            <div class="input-group-append">
+                                <button class="btn btn-info ms-5" type="submit">View</button>
+                                <button class="btn btn-primary btn-sm" type="button"><a href="{% url 'export_to_excel' %}" class="text-white " style="text-decoration: none;">Export to
+                                        Excel</a></button>
+                                <button class="btn btn-primary btn-sm" type="button"><a href="{% url 'export_to_pdf' %}" class="text-white" style="text-decoration: none;">Export to
+                                        PDF</a></button>
+                                        <button class="btn btn-primary btn-sm" type="button"><a href="{% url 'export_to_csv' %}" class="text-white"
+                                                style="text-decoration: none;">Export to
+                                                CSV</a></button>
+                            </div>
+                        </div>
+                    
+                </div>
+            </form>
+            </div>
+    
+               
+            </div>
+        
+        <div class="card-body  text-white">
+            <table class="table table-borderless ms-4  text-white">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{product.created_at}}</td>
+                        <td>{{product.product.productName}}</td>
+                        <td>{{product.quantity}}</td>
+                        <td>{{product.order.order_total}}</td>
+                    </tr>
+                   
+                {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="card-footer  text-white d-flex justify-content-end me-5">
+            <strong>Total: &nbsp;</strong>{{Total}}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous"></script>
+    <script>
+    $(function () {
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+            var maxMonth = year + '-' + month;
+            $('#date').attr('max', maxDate);
+            $('#month_date').attr('max', maxMonth);
+        });
+    </script>
+    {% endblock %}
+</body>
+</html>

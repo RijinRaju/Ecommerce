@@ -1,0 +1,49 @@
+{% extends 'owner/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+{% block content %}
+
+    <a href="{% url 'category_create'%}" class="mb-3 ms-3"><button class="btn mt-2" style="background-color: #248afd;">ADD
+        Category</button></a>
+
+<div class="card mt-4" style="background-color: #191c24;">
+  <div class="card-header text-white">
+      Category
+<!--      <a href="{% url 'sub_category' %}" class="btn "><button class="btn btn-warning">Sub category</button></a>-->
+  </div>
+  <div class="card-body" style="background-color: #000000;">
+<div class="row">
+{% for cat in category_list %}
+
+         <div class="col">
+             <div class="card mt-3 text-white" style="width: 15rem;background-color: #191c24;">
+                 <div class="img mt-3" style="width:6rem;margin-left:3rem;">
+                 <img src="{{cat.thumbnail.url}}" class="card-img-top" alt="..." height="100" width="100">
+                     </div>
+  <div class="card-body">
+    <h5 class="card-title">{{cat.title}}</h5>
+    <p class="card-text">{{cat.description}}</p>
+      <p class="card-text">url-slug:{{cat.url_slug}}</p>
+    <a href="{% url 'category_update' cat.id %}" class="btn " style="background-color: #248afd;">EDIT</a>
+      <a href="{% url 'category_delete' cat.id %}" class="btn" style="background-color: #ff4747;">DELETE</a>
+  </div>
+</div>
+         </div>
+
+  {% endfor %}
+    </div>
+  </tbody>
+</table>
+  </div>
+</div>
+
+{% endblock%}
+</body>
+</html>
