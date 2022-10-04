@@ -24,12 +24,13 @@ from  xhtml2pdf import pisa
 from django.template.loader import get_template
 import datetime
 import csv
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import cache_control
 from docx.shared import Inches
 
 # Create your views here.
 
-@never_cache
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login(request):
     if 'adminSession' in request.session:
         return redirect('admin_home')
@@ -50,7 +51,6 @@ def login(request):
     else:
         return render(request, 'owner/login.html')
 
-@never_cache
 @login_required
 def admin_logout(request,):
     if 'adminSession' in request.session:
