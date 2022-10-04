@@ -164,3 +164,4 @@ SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 django_heroku.settings(locals())
 
+CSRF_TRUSTED_ORIGINS = ["https://beeshopee.gq"]
