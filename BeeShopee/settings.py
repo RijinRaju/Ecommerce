@@ -18,7 +18,6 @@ from decouple import config
 from django.urls import conf
 import django_heroku
 import dj_database_url
-from boto.s3.connection import S3Connection
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +28,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-NAME =  S3Connection(os.environ['NAME'])
 
 SECRET_KEY = 'django-insecure-3g%f!eiikn&s8!hjg4_w3(lw)-8hvk9u-bpfm*t5ngt1#!)#kl'
 
@@ -98,7 +96,7 @@ AUTH_USER_MODEL = 'customers.Customers'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': NAME,
+        'NAME': config('NAME'),
         'USER': config('USER'),
         'HOST': config('HOST'),
         'PASSWORD':config('PASSWORD') ,
