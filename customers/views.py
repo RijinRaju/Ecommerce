@@ -13,10 +13,11 @@ import random
 import string
 from django.conf import settings
 from shop.models import Referal_code
-# from ..shop.views import home
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
