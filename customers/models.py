@@ -43,9 +43,9 @@ class MyAccountManager(BaseUserManager):
 class Customers(AbstractBaseUser):
     name = models.CharField(max_length=50)
     username = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=100,null=True)
     email = models.CharField(max_length=100,unique=True)
-    phone = models.CharField(max_length=13)
+    phone = models.CharField(max_length=13,null=True)
     password = models.CharField(max_length=100)
     status=models.CharField(max_length=100,default='ACTIVE')
 

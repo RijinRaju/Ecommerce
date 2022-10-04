@@ -11,7 +11,7 @@
   <div class="row bg-dark">
     <div class="col-6 bg-warning">
 
-<div class="card  shadow-lg p-3 mb-5 bg-white rounded bg-warning "  style="width: 33rem;height:30rem;margin-left:25rem;margin-top:8rem">
+<div class="card  shadow-lg p-3 mb-5 bg-white rounded bg-warning "  style="width: 33rem;height:35rem;margin-left:25rem;margin-top:8rem">
 
      <div class="col-6 " style="margin-left:10rem;margin-top:1rem;">
                     <span class="h1 text-uppercase text-dark bg-warning ">BEE</span>
@@ -38,10 +38,20 @@
 
   </div>
   <button type="submit" class="btn btn-primary " style="margin-left:8rem;" onclick=" return validateForm() ">Submit</button>
-    <h5 style="margin-left:9rem;" >OR</h5>
+    <h5 style="margin-left:9rem;" class="mt-2" >OR</h5>
 
-          <a href="{% url   'otp_auth' %}"style="margin-left:8rem;text-decoration:none;"  >Request OTP </a>
-           <a href="{% url   'signup' %}"style="margin-left:8rem;text-decoration:none;"  >SignUp </a>
+      <div class="row">
+<div class="col-8">
+<a href="{% url   'otp_auth' %}" style="text-decoration:none;">Request OTP </a>
+</div>
+
+<div class="col-4 ">
+  <a href="{% url   'signup' %}" style="text-decoration:none;">SignUp </a>
+</div>
+      </div>
+   
+          
+           
 </form>
   </div>
 
