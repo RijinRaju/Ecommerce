@@ -1,9 +1,4 @@
-from base64 import encode
-from calendar import month
 from datetime import date, datetime
-from math import prod
-from pydoc import doc
-from unicodedata import category
 from .models import sales_report,monthly_sales_report
 from django.http import HttpResponse, response
 from django.shortcuts import render,redirect

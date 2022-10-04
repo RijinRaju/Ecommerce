@@ -1,7 +1,3 @@
-import imp
-from itertools import product
-import json
-from threading import current_thread
 from django.shortcuts import render,redirect
 from django.template import context
 from .models import Category_offer, Products, Banners,Category,Referal_code,Wallet,Coupon,Product_offer,Rating

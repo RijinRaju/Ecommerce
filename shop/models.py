@@ -1,7 +1,4 @@
-from operator import mod
-from pyexpat import model
-from statistics import mode
-from tkinter.tix import Tree
+
 from django.db import models
 from django.urls import reverse
 from customers.models import Customers
