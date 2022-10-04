@@ -28,7 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 from docx.shared import Inches
 
 # Create your views here.
-@csrf_exempt
+
 @never_cache
 def login(request):
     if 'adminSession' in request.session:
