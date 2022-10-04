@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/beeshopee/Ecommerce
+ExecStart=/home/ubuntu/beeshopee/env/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          BeeShopee.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

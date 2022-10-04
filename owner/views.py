@@ -24,9 +24,11 @@ from  xhtml2pdf import pisa
 from django.template.loader import get_template
 import datetime
 import csv
+from django.views.decorators.csrf import csrf_exempt
 from docx.shared import Inches
 
 # Create your views here.
+@csrf_exempt
 @never_cache
 def login(request):
     if 'adminSession' in request.session:
