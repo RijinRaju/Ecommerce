@@ -11,7 +11,7 @@ class Category(models.Model):
     thumbnail=models.FileField(upload_to='static',default=0)
     description=models.TextField(max_length=250)
     category_at=models.DateTimeField(auto_now_add=True)
-    is_active=models.IntegerField(default=1)
+    is_active=models.BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse("category")

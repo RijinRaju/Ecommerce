@@ -14,16 +14,29 @@
         <div class="col">
 <div class="card mt-5 text-white" style="width: 38rem;height:35rem; background-color: #191c24;">
   <div class="card-body">
-    <h5 class="card-title">Add Category</h5>
-
+    <h5 class="card-title">Add Category </h5>
+        {% for msg in messages %}<p  class="text-danger">{{msg}}</p>{% endfor %}
           <form method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              {% for field in form %}
-              <div class="form-group">
-                    <label for="">{{field.label }} </label>
-                    <input type="{{ field.field.widget.input_type }}" name="{{field.name}}" id="{{field.name}}" class="form-control">
+              
+              <div class="form-group form-control mt-3 ">
+                            <label for="name" class="form-label">Title</label>
+                            <input type="text" class="form-control " name="title" id="title" placeholder="Title Name" required>
+
+                            <label for="url_slug" class="form-label">URL_slug</label>
+                            <input type="text" class="form-control " name="url_slug" id="url_slug">
+
+
+                                <label for="img1" class="form-label">Thumbnail</label>
+                                <input type="file" name="thumbnail" class="form-control" id="thumbnail" style="width:12rem;" required>
+
+
+                                <label for="textarea" class="form-label"> Description</label>
+                                <textarea class="form-control" name="desc" id="textarea" rows="3" required></textarea>
+
+                                <label for="textarea" class="form-label">Active</label>
+                                <input type="checkbox" class="  form-check-input" name="active" id="active" checked >
                 </div>
-              {% endfor %}
     <button type="submit" value="submit" class="btn btn-primary mt-5 ms-5">submit</button>
 </form>
   </div>

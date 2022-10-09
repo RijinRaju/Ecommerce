@@ -29,9 +29,9 @@ def home(request):
    
     if 'customer' in request.session:
         cus_si = request.session.get('customer')
-        print(cus_si)
-        user = Customers.objects.get(Q(email =request.user) | Q(phone = request.session.get('customer')) )
-        user_id = user.id
+        print("in home",cus_si)
+        user = Customers.objects.filter(Q(email =request.user) | Q(phone = request.session.get('customer')) )
+        print("users are",user)
         p = Paginator(products, 9)
         page = request.GET.get('page')
         prod = p.get_page(page)

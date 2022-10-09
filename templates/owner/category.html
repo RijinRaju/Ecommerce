@@ -22,12 +22,12 @@
 <div class="row">
 {% for cat in category_list %}
 
-         <div class="col">
+         <div class="col ">
              <div class="card mt-3 text-white" style="width: 15rem;background-color: #191c24;">
                  <div class="img mt-3" style="width:6rem;margin-left:3rem;">
                  <img src="{{cat.thumbnail.url}}" class="card-img-top" alt="..." height="100" width="100">
                      </div>
-  <div class="card-body">
+  <div class="card-body" >
     <h5 class="card-title">{{cat.title}}</h5>
     <p class="card-text">{{cat.description}}</p>
       <p class="card-text">url-slug:{{cat.url_slug}}</p>

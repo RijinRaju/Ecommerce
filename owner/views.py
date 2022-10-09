@@ -251,10 +251,10 @@ class CategoryList(ListView):
 
 
 
-class CategoryCreate(CreateView):
-    model = Category
-    fields = "__all__"
-    template_name = 'owner/add_category.html'
+    # class CategoryCreate(CreateView):
+    #     model = Category
+    #     fields = "__all__"
+    #     template_name = 'owner/add_category.html'
 
 class CategoryUpdate(UpdateView):
     model = Category
@@ -284,26 +284,6 @@ class SubCategoryUpdate(UpdateView):
 
 
 
-# def category(request):
-    # if 'adminSession' in request.session:
-        # sub_cat_data=Sub_category.objects.all()
-        # if request.method == "POST":
-        #     category=Category()
-        #     sub_category=Sub_category()
-        #     category.name=request.POST["category_name"]
-        #     category.description=request.POST["desc"]
-        #     sub_category.sub_cat_name=request.POST["sub_category"]
-        #     category.sub_cat_name = request.POST["sub_category"]
-        #     if len(request.FILES) != 0:
-        #         category.category_img=request.FILES["img"]
-        #     category.save()
-        #     category_data=Category.objects.all()
-        #
-        #     return render(request,'owner/category.html',{"category_data":category_data,'cat_data':sub_cat_data})
-        #
-        # return render(request,'owner/category.html',{'cat_data':sub_cat_data})
-    # return render(request, 'owner/category.html')
-
 class Category_delete(DeleteView):
     model = Category
     template_name = 'owner/category_delete.html'
@@ -324,7 +304,25 @@ class Subcategory_delete(DeleteView):
 @login_required(login_url='login')
 def add_category(request):
     if 'adminSession' in request.session:
-        return render(request,'owner/add_category.html')
+        if request.method == 'POST':
+            cate = Category()
+            title = request.POST.get('title')
+            url_slug = request.POST.get('url_slug')
+            description = request.POST.get('desc')
+            if len(request.FILES) != 0:
+                thumbnail = request.FILES['thumbnail']
+            if Category.objects.filter(title__icontains =title).exists():
+                print("true category")
+                messages.info(request,"category already exists")
+            else:
+                cate.title = title
+                cate.url_slug = url_slug
+                cate.description = description
+                cate.thumbnail = thumbnail
+                cate.save()
+                return redirect('category')
+                
+    return render(request,'owner/add_category.html')
 
 
 

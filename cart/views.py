@@ -325,6 +325,7 @@ def cart(request,total=0,quantity=0,cart_items=None):
     return render(request,'cart/cart.html',context)
 
 
+@login_required(login_url='login')
 def checkout(request,total=0,quantity=0,cart_items=None):
     if request.user.is_authenticated:
         dis_total = 0

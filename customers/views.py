@@ -53,17 +53,17 @@ def otp_auth(request):
         phone = request.POST.get('phone')
         request.session['phone'] = phone
 
-        if phone == '6282931446':
-
+        if Customers.objects.filter(phone=phone).exists():
             totp= pyotp.TOTP('base32secret3232').now()
             request.session['totp'] = totp
 
             client = Client(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
-            message = client.messages.create(
-                from_='+14243216608',
-                body=f' one time password for Bee_Shopee is:{totp}',
-                to='+91'+phone
-            )
+            verification = client.verify \
+                .services(settings.SERVICE) \
+                .verifications \
+                .create(to='+91'+phone, channel='sms')
+
+
             return redirect(verify_otp)
         else:
 
@@ -78,7 +78,6 @@ def otp_auth(request):
 def verify_otp(request):
     if request.method == 'POST':
         otp = request.POST.get('otp')
-        phone_no = request.POST.get('phone')
         print(otp)
         totp = request.session['totp']
         print(totp)
@@ -86,6 +85,7 @@ def verify_otp(request):
             request.session['customer'] = request.session.get('phone')
             return redirect('/')
         else:
+            messages.info(request,'invalid OTP')
             return render(request, 'customers/verify_auth.html')
     else:
         return render(request, 'customers/verify_auth.html')
@@ -112,6 +112,10 @@ def signup(request):
         elif Customers.objects.filter(email=email).exists():
             messages.info(request,'email is already taken')
             return redirect('signup')
+        elif Customers.objects.filter(phone=phone).exists():
+            messages.info(request,'Mobile number is already taken')
+            return redirect('signup')
+
         else:
             add_customer = Customers.objects.create_user(name=name,username=username,address=address,email=email,phone=phone,password=password)
             add_customer.save()
