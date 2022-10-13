@@ -54,15 +54,15 @@ def otp_auth(request):
         request.session['phone'] = phone
 
         if Customers.objects.filter(phone=phone).exists():
-            totp= pyotp.TOTP('base32secret3232').now()
-            request.session['totp'] = totp
+            # totp= pyotp.TOTP('base32secret3232').now()
+            request.session['phone_no'] = phone
 
             client = Client(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
             verification = client.verify \
                 .services(settings.SERVICE) \
                 .verifications \
                 .create(to='+91'+phone, channel='sms')
-
+            
 
             return redirect(verify_otp)
         else:
@@ -79,13 +79,25 @@ def verify_otp(request):
     if request.method == 'POST':
         otp = request.POST.get('otp')
         print(otp)
-        totp = request.session['totp']
-        print(totp)
-        if otp == totp:
-            request.session['customer'] = request.session.get('phone')
-            return redirect('/')
+        phone_no = request.session['phone_no']
+        print(phone_no)
+        if Customers.objects.filter(phone=phone_no).exists():
+            user = Customers.objects.get(phone=phone_no)
+
+            client = Client(settings.ACCOUNT_SID, settings.AUTH_TOKEN)
+            verification_check = client.verify \
+                .services(settings.SERVICE) \
+                .verification_checks \
+                .create(to='+91'+phone_no, code=otp)
+            if verification_check.status == "approved":
+                auth.login(request,user)
+                request.session['customer'] = request.session.get('phone')
+                return redirect('/')
+            else:
+                messages.info(request,'invalid OTP')
+                return render(request, 'customers/verify_auth.html')
         else:
-            messages.info(request,'invalid OTP')
+            messages.info(request, 'invalid phone number')
             return render(request, 'customers/verify_auth.html')
     else:
         return render(request, 'customers/verify_auth.html')

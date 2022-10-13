@@ -27,12 +27,24 @@
         <p class="card-text"><b>Updated:</b>{{order.updated_at}}</p>
         <form action="" method="post">
             {% csrf_token %}
-            {{form}}
-            <button type="submit" class="btn text-white " style="background-color: #248afd;">submit</button>
+            <select class="form-select form-select-sm" name="status" aria-label=".form-select-sm example">
+              
+              {% if order.order.status != 'Out of delivery' %}
+                {% if order.order.status != 'Delivered' %}
+                <option value="Confirmed">Confirmed </option>
+                  <option value="Cancelled">Cancelled</option>
+                  <option value="Shipped">Shipped</option>
+                {% endif %}
+              {% endif %}
+              {% if order.order.status != 'Delivered' %}
+              <option value="Out of delivery">Out of delivery </option>
+              {% endif %}
+              <option value="Delivered">Delivered</option>
+           
+            </select>
+            <button type="submit" class="btn text-white mt-2" style="background-color: #248afd;">submit</button>
         </form>
-<!--        <select name="" id="">-->
-<!--            <option value="">{{order.order.status}}</option>-->
-<!--        </select>-->
+
     </div>
   </div>
 

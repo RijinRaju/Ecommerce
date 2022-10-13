@@ -1,3 +1,4 @@
+from tkinter import Variable
 from django.shortcuts import render,redirect
 from django.template import context
 from .models import Category_offer, Products, Banners,Category,Referal_code,Wallet,Coupon,Product_offer,Rating
@@ -55,6 +56,8 @@ def home(request):
             'prod_page':prod,
             'banners':banners,
             'category':category,
+            'category_offer': category_offer,
+            'product_offer': product_offer,
         }
         return render(request,'shop/home.html',context)
 
@@ -65,6 +68,36 @@ def detailed_view(request,id):
     product = Products.objects.get(id=id)
     category_offer = Category_offer.objects.all()
     all_products = Products.objects.all()
+    
+    category_view = Category_offer.objects.filter(category = product.category)
+    product_view = Product_offer.objects.filter(product = product)
+    flag = 0
+    price = 0
+    if category_view :
+        if product_view:
+            flag = 1
+            for cat in category_view:
+                for pro in product_view:
+                    offer_comp = cat.offer_percent if cat.offer_percent > pro.offer_percent else pro.offer_percent
+                    discount_price = offer_comp *product.price/100
+                    price = product.price - discount_price
+                    print("printing the price ",price)
+        else:
+            for cat in category_view:
+                offer_comp = cat.offer_percent
+                discount_price = offer_comp *product.price/100
+                price = product.price - discount_price
+                print("category only price ",price)
+    if flag == 0:
+        if product_view:
+            for pro in product_view:
+                offer_comp = pro.offer_percent
+                discount_price = offer_comp *product.price/100
+                price = product.price - discount_price
+                print("product only  price ",price) 
+
+
+
     review  = Rating.objects.filter(product = id)
     if 'customer' in request.session:
         if request.method == 'POST':
@@ -72,18 +105,26 @@ def detailed_view(request,id):
             request.session['productQuantity'] = quantity
             print("quantity:",request.session.get('productQuantity'))
         user_session = request.session.get('customer')
-        user=Customers.objects.get(email=user_session)
+        user=Customers.objects.get(email=request.user)
 
         context = {
             'product_view':product,
             'user':user,
             'all_products':all_products,
             'category_offer':category_offer,
-            'review':review
+            'review':review,
+            'price': price
         }        
         return render(request, "shop/detail.html",context)
+    context = {
+            'product_view':product,
+            'all_products':all_products,
+            'category_offer':category_offer,
+            'review':review,
+            'price': price
+        }    
 
-    return render(request, 'shop/detail.html', {'product_view': product, 'all_products': all_products})
+    return render(request, 'shop/detail.html',context)
 
 
 def shop_view(request):

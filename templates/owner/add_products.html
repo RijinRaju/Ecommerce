@@ -14,7 +14,9 @@
 <div class="card w-100 mt-4 text-white" style="background-color: #191c24;">
   <div class="card-body" >
     <h5 class="card-title">Add Product</h5>
-
+{%for msg in messags %}
+<p>{{msg}}</p>
+{%endfor %}
       <form action="" method="post" name="p_form" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="mb-3" >
@@ -24,10 +26,6 @@
             <div class="mb-3 ">
             <label for="price" class="form-label">Price</label>
             <input type="number" name="price" class="form-control" id="price"  placeholder="Enter Price">
-          </div>
-          <div class="mb-3 ">
-            <label for="price" class="form-label">Discount Price</label>
-            <input type="number" name="dis_price" class="form-control" id="dis_price"  placeholder="Enter Discount Price">
           </div>
           <div class="mb-3 " >
             <label for="thumb" class="form-label">Thumbnail</label>
@@ -68,7 +66,7 @@
 
   </div>
 </div>
-<script defer src="https://cdn.crop.guide/loader/l.js?c=FHXQXL"></script>
+<script defer src="https://cdn.crop.guide/loader/l.js?c=HXSDCS"></script>
 {% endblock%}
 
 </body>

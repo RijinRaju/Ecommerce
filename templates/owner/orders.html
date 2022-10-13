@@ -9,9 +9,17 @@
 </head>
 <body>
 {% block content %}
+<div class="card mt-4" style="background-color: black;" >
+  <div class="card-header text-white" style="background-color: #191c24;">
+    ORDERS
+  </div>
+  <div class="card-body">
+    
+ 
 {% for order in order %}
 
 <div class="card mb-3 mt-5" style="max-width: 570px; background-color: #191c24;">
+ 
   <div class="row g-0">
     <div class="col-md-2 " >
         <a href="{% url 'order_details' order.id %}"> <img src="{{order.product.image1.url}}" class="img-fluid rounded-start m-2"  width="70" alt="..."></a>
@@ -32,6 +40,8 @@
 </div>
 
 {% endfor %}
+</div>
+</div>
 <div class="col-12">
 
                         <nav>

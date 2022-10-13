@@ -11,19 +11,48 @@
     {% block content %}
     
     <div class="card mt-4 text-white" style="background-color: #191c24;">
-        <h5 class="card-header">Sales of Day</h5>
+        <h5 class="card-header">SALES</h5>
         <div class="container card-header text-white">
             <div class="row ">
+                <div class="row ">
+                    <div class="col">
+                        <form action="{% url 'year_sales' %}" method="post">
+                            {% csrf_token %}
+                           <div class="col-12">
+                            <label for="month">Year</label>
+                            <input type="number" name="year_date" class="form-control year" id="year_date" min="2022" max="2025">
+                            </div>
+                            <div class="col-12">
+                            <input type="submit" class="btn btn-info mt-2" value="Year View">
+                            </div>
+                    
+                        </form>
+                    </div>
+                <div class="col">
+                    <form action="{% url 'month_sales' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-12">
+                        <label for="month">Month</label>
+                        <input type="month" name="month_date" class="form-control month" id="month_date" max="2022-10-12">
+                        </div>
+                        <div class="col-12">
+                        <input type="submit" class="btn btn-info mt-2 mb-3" value="Month View">
+                            </div>
+                    </form>
+                </div>
+                </div>
+               
+                
             <form action="" method="GET">
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <div class="col">
-                            <input type="date" name= "date" class="form-control date" id="date" max="2022-09-28">
+                            <input type="date" name= "date" class="form-control date" id="date" max="2022-10-12">
                     </div>
                    
                         <div class="col">
                             <div class="input-group-append">
-                                <button class="btn btn-info ms-5" type="submit">View</button>
+                                <button class="btn btn-info ms-5" type="submit">Date View</button>
                                 <button class="btn btn-primary btn-sm" type="button"><a href="{% url 'export_to_excel' %}" class="text-white " style="text-decoration: none;">Export to
                                         Excel</a></button>
                                 <button class="btn btn-primary btn-sm" type="button"><a href="{% url 'export_to_pdf' %}" class="text-white" style="text-decoration: none;">Export to
@@ -68,6 +97,22 @@
         <div class="card-footer  text-white d-flex justify-content-end me-5">
             <strong>Total: &nbsp;</strong>{{Total}}
         </div>
+
+        <nav class="mt-2">
+        
+            <ul class="pagination justify-content-center">
+                <li class="me-5 text-white">page {{products.number}} of {{products.paginator.num_pages}}</li>
+                {% if products.has_previous %}
+                <a class="page-link" href="?page=1">&laquo; First</span></a>
+                <a class="" href="?page={{products.previous_page_number}}"></a>
+                {% endif %}
+        
+                {% if products.has_next %}
+                <a class="page-link" href="?page={{products.next_page_number}}">Next</a>
+                <a class="page-link" href="?page={{products.paginator.num_pages}}">Last &raquo;</a>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
@@ -90,6 +135,7 @@
             $('#date').attr('max', maxDate);
             $('#month_date').attr('max', maxMonth);
         });
+
     </script>
     {% endblock %}
 </body>

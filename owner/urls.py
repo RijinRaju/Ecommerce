@@ -47,11 +47,9 @@ urlpatterns = [
 
 
     path('sales/',views.sales,name="sales"),
+    path('monthly_sales/',views.monthly_sales,name="month_sales"),
+    path('yearly_sales/',views.yearly_sales,name="year_sales"),
     path('export_to_excel/',views.export_to_excel,name="export_to_excel"),
     path('export_to_pdf/',views.export_to_pdf,name="export_to_pdf"),
-    path('monthly_export_to_excel/',views.monthly_export_to_excel,name="monthly_export_to_excel"),
-    path('monthly_export_to_pdf/',views.monthly_export_to_pdf,name="monthly_export_to_pdf"),
     path('export_to_csv/',views.export_to_csv,name="export_to_csv"),
-    path('monthly_export_to_csv/', views.monthly_export_to_csv, name="monthly_export_to_csv"),
-
 ]

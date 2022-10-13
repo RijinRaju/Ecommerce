@@ -10,8 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from ctypes import cast
-from email.policy import default
 from pathlib import Path
 import os
 from decouple import config
@@ -164,3 +162,4 @@ SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 django_heroku.settings(locals())
 
 CSRF_TRUSTED_ORIGINS = ["https://beeshopee.gq"]
+ 

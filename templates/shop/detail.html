@@ -87,8 +87,14 @@
                         </div>
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">&#8377;{{product_view.discount_price}}</h3>
+                    {% if price > 0 %}
+                    <h3 class="font-weight-semi-bold mb-4">&#8377;{{price}}</h3>
                     <h6 class="text-danger ml-2"><del>&#8377;{{product_view.price}}</del></h6>
+                  {% else %}
+                <h3 class="font-weight-semi-bold mb-4">&#8377;{{product_view.price}}</h3>
+                {% endif %}                     
+                    
+                   
                     <p class="mb-4">{{product_view.thumbnail}}</p>
 
                     <div class="d-flex align-items-center mb-4 pt-2">
@@ -105,7 +111,7 @@
                         {% if cat.category == product_view.category %}
                             <span class="text-success mb-3">
                             <i class="fa fa-solid fa-tag"></i>
-                            {{cat.offer_name}}.
+                            {{cat.offer_name}}
                             {% endif %}
                         </span><br>
                         {% endfor %}

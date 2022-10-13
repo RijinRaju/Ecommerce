@@ -36,7 +36,8 @@ def add_cart(request,product_id):
             cart.save()
         try:
             cart_item = CartItem.objects.get(product=product,cart=cart,user=request.user)
-            cart_item.quantity += 1  # pressing first time cart button
+            if cart_item.quantity < 4:
+                cart_item.quantity += 1  # pressing first time cart button
             cart_item.save()
             # new code for offer ..............
             try:

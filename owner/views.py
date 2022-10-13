@@ -140,7 +140,7 @@ def add_product(request):
             pro = Products()
             pro.productName = request.POST.get('name')
             pro.price = request.POST.get('price')
-            pro.discount_price = request.POST.get('dis_price')
+            pro.discount_price = request.POST.get('price')
             pro.thumbnail = request.POST.get('thumbnail')
             category_id = request.POST.get('category')
             category = Category.objects.get(id = category_id)
@@ -167,7 +167,7 @@ def edit_product(request,id):
         if request.method == 'POST':
             products.productName=request.POST['name']
             products.price=request.POST['price']
-            products.discount_price = request.POST['dis_price']
+            products.discount_price = request.POST['price']
             products.quantity=request.POST['stocks']
             products.thumbnail=request.POST['thumbnail']
             products.description=request.POST['desc']
@@ -231,14 +231,11 @@ def order_details(request,id):
     ord = order.order_id
     orders = Order.objects.get(id = ord) #order id of individual items
     if request.method =="POST":
-        status = statusForm(request.POST, instance = orders )
-        if status.is_valid():
-            status.save()
-            print(status)
-            return render(request, 'owner/orders_details.html', {'order': order,'form':status})
+        orders.status = request.POST['status']
+        orders.save()
+        return render(request, 'owner/orders_details.html', {'order': order})
     else:
-        SF = statusForm(request.POST)
-        return render(request,'owner/orders_details.html',{'order':order,'form':SF})
+        return render(request,'owner/orders_details.html',{'order':order})
 
 
 
@@ -596,8 +593,11 @@ def sales(request):
                     excel_products.amount = product.order.order_total
                     Total += product.order.order_total
                     excel_products.save()
+                paginator = Paginator(products,20)
+                page_number = request.GET.get('page')
+                products_page = paginator.get_page(page_number)
                 context = {
-                'products':products,
+                'products':products_page,
                 'Total':Total
                 }
                 return render(request,'owner/sales.html',context)
@@ -612,8 +612,11 @@ def sales(request):
             excel_products.amount = product.order.order_total
             Total += product.order.order_total
             excel_products.save()
+        paginator = Paginator(products,20)
+        page_number = request.GET.get('page')
+        products_page = paginator.get_page(page_number)
         context = {
-                'products': products,
+                'products': products_page,
                 'Total': Total
         }
         return render(request, 'owner/sales.html', context)
@@ -623,25 +626,60 @@ def sales(request):
 # sales per month.............................
 def monthly_sales(request):
     if 'adminSession' in request.session:
-        if 'month_date' in request.GET:
-            month_date = request.GET.get('month_date')
+        if request.method == "POST":
+            month_date = request.POST['month_date']
+            print("monthly ",month_date)
             Total = 0
             if month_date:
-                excel_products = monthly_sales_report.objects.all().delete()
+                excel_products = sales_report.objects.all().delete()
                 # months = OrderProduct.objects.annotate(month=ExtractMonth('created_at'))
-                months = OrderProduct.objects.filter(created_at__icontains = month_date)
+                months = OrderProduct.objects.filter(created_at__icontains = month_date )
                 print("months",months)
                 for month in months:
-                    excel_products = monthly_sales_report()
+                    excel_products = sales_report()
                     excel_products.date = month.created_at
                     excel_products.product_name = month.product.productName
                     excel_products.quantity = month.quantity
                     excel_products.amount = month.order.order_total
                     Total += month.order.order_total
                     excel_products.save()
+                paginator = Paginator(months,20)
+                page_number = request.GET.get('page')
+                months_page = paginator.get_page(page_number)
                 context = {
-                    'month_products': months,
-                    'month_Total':Total
+                    'products': months_page,
+                    'Total':Total
+                }
+                return render(request, 'owner/sales.html', context)
+
+    return redirect(sales)
+
+
+
+def yearly_sales(request):
+    if 'adminSession' in request.session:
+        if request.method == "POST":
+            year_month_date = str(request.POST['year_date'])
+            year_date = year_month_date[0:4]
+            Total = 0
+            if year_date:
+                excel_products = sales_report.objects.all().delete()
+                # months = OrderProduct.objects.annotate(month=ExtractMonth('created_at'))
+                months = OrderProduct.objects.filter(created_at__icontains = year_date)
+                for month in months:
+                    excel_products = sales_report()
+                    excel_products.date = month.created_at
+                    excel_products.product_name = month.product.productName
+                    excel_products.quantity = month.quantity
+                    excel_products.amount = month.order.order_total
+                    Total += month.order.order_total
+                    excel_products.save()
+                paginator = Paginator(months,20)
+                page_number = request.GET.get('page')
+                months_page = paginator.get_page(page_number)
+                context = {
+                    'products': months_page,
+                    'Total':Total
                 }
                 return render(request, 'owner/sales.html', context)
 

@@ -35,7 +35,7 @@ class Sub_category(models.Model):
 
 class Products(models.Model):
     productName= models.CharField(max_length=200)
-    price=models.IntegerField()
+    price=models.IntegerField(default=0)
     discount_price = models.IntegerField(default=0)
     quantity=models.IntegerField()
     descriptions=models.CharField(max_length=500)
