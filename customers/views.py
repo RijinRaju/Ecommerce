@@ -24,11 +24,25 @@ def login(request):
         user_data = auth.authenticate(email=email, password=password,status="ACTIVE")
         if user_data:
             try:
-                print("inside the try")
                 cart = Cart.objects.get(cart_id = _cart_id(request))# checking is it any cart item is present
-                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
-                print(is_cart_item_exists)
-                if is_cart_item_exists:
+                is_cart_item_exist = CartItem.objects.filter(cart=cart).exists()
+                is_user_cart_item_exists = CartItem.objects.filter(user=user_data).exists()
+                
+                if is_user_cart_item_exists:
+                    if is_cart_item_exist:
+                        is_cart_item_exists = CartItem.objects.filter(cart=cart)
+                        for i in is_cart_item_exists:
+                            variable_for_product=CartItem.objects.filter(user=user_data,product=i.product)
+                            if variable_for_product:
+                                
+                                for j in variable_for_product:
+                                    j.quantity = j.quantity+i.quantity
+                                    if j.quantity > 4:
+                                        j.quantity = 4
+                                    j.save()
+                                    i.delete()
+                
+                if is_cart_item_exist:
                     cart_item = CartItem.objects.filter(cart=cart)
                     print("userdata:",user_data)
                     for item in cart_item:

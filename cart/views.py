@@ -25,17 +25,17 @@ def add_cart(request,product_id):
     product_offer_amount = 0
     category_offer_amount = 0
     category_offer = Category_offer.objects.all()
-
     if request.user.is_authenticated:
         try:
             cart= Cart.objects.get(cart_id =_cart_id(request))
         except:
-            cart = Cart.objects.create(
-                cart_id=_cart_id(request)
-            )
-            cart.save()
+            pass
+            # cart = Cart.objects.create(
+            #     cart_id=_cart_id(request)
+            # )
+            # cart.save()
         try:
-            cart_item = CartItem.objects.get(product=product,cart=cart,user=request.user)
+            cart_item = CartItem.objects.get(product=product,user=request.user)
             if cart_item.quantity < 4:
                 cart_item.quantity += 1  # pressing first time cart button
             cart_item.save()
@@ -65,17 +65,13 @@ def add_cart(request,product_id):
                         cart_item.save()
                 
             except:
-                pass
-        # end here.................
-           
-            print("cart_quantity:",cart_item.quantity)
+                pass           
 
-        except CartItem.DoesNotExist:
+        except :
             cart_item = CartItem.objects.create(
                 product=product,
                 quantity=1,
                 user=request.user,
-                cart=cart,
             )
             cart_item.save()
             # new code for offer ..............
@@ -159,12 +155,13 @@ def cart_prod_inr(request):
         try:
             cart = Cart.objects.get(cart_id=_cart_id(request))
         except:
-            cart = Cart.objects.create(
-                cart_id=_cart_id(request)
-            )
-            cart.save()
+            pass
+            # cart = Cart.objects.create(
+            #     cart_id=_cart_id(request)
+            # )
+            # cart.save()
         try:
-            cart_item = CartItem.objects.get(product=product, cart=cart, user=request.user)
+            cart_item = CartItem.objects.get(product=product, user=request.user)
             cart_item.quantity +=1  # pressing first time cart button
             cart_item.total = body['total']
             cart_item.save()
@@ -173,7 +170,7 @@ def cart_prod_inr(request):
                 product=product,
                 quantity=1,
                 user=request.user,
-                cart=cart,
+                
                 total=body['total'],
             )
             cart_item.save()
@@ -195,7 +192,7 @@ def cart_prod_inr(request):
             cart_item = CartItem.objects.create(
                 product=product,
                 quantity=1,
-                cart=cart,
+                
             )
             cart_item.save()
     return redirect('cart')
